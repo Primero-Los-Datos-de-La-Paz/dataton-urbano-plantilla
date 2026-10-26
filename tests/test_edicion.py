@@ -26,8 +26,11 @@ def edicion_ficticia() -> dict:
     ed["contacto"]["buzon_institucional"] = "buzon@ejemplo.invalid"
     ed["calendario"][0]["fecha_inicio"] = dt.date(2099, 3, 2)
     ed["calendario"][2].update({"fecha_inicio": dt.date(2099, 3, 9), "fecha_fin": dt.date(2099, 3, 12)})
-    ed["desafios"][0].update({"slug": "ejemplo", "titulo": "Desafío ficticio", "nivel_esperado": "Documentado",
-                              "responsable_dato": {"unidad": "Unidad Ficticia", "codeowner": "@RESPONSABLE-D1"}})
+    # Mismos códigos de desafío que el edicion.yml del repositorio, para que sus bloques se puedan generar.
+    ids = [d["id"] for d in edicion.cargar(RAIZ / "edicion" / "edicion.yml")["desafios"]]
+    ed["desafios"] = [{"id": i, "slug": "ejemplo", "titulo": "Desafío ficticio", "nivel_esperado": "Documentado",
+                       "alcance": "Ficticio", "responsable_dato": {"unidad": "Unidad Ficticia", "codeowner": f"@RESPONSABLE-{i}"}}
+                      for i in ids]
     for c, p in zip(ed["rubrica"]["criterios"], [20, 20, 15, 15, 10, 10, 10]):
         c["peso"] = p
     return ed
