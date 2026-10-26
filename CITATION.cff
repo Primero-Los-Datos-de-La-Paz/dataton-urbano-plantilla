@@ -1,0 +1,13 @@
+# Archivo generado desde edicion/edicion.yml con `python -m dataton regenerar`. No lo edites a mano.
+cff-version: 1.2.0
+message: Si usas este repositorio, cítalo con estos datos.
+title: Datatón urbano de preparación de datos (plantilla)
+type: software
+authors:
+- name: Por definir en edicion/edicion.yml
+version: 0.1.0
+keywords:
+- datatón
+- datos abiertos
+- preparación de datos
+- ciudad inteligente

@@ -1,0 +1,2 @@
+# Dependencias de las herramientas (versiones fijas).
+PyYAML==6.0.3

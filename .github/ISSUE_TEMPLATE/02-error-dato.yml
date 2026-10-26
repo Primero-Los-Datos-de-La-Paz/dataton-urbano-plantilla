@@ -1,0 +1,58 @@
+name: Error en un dato
+description: Avisa de un valor que parece incorrecto, incompleto o inconsistente.
+title: "[Error en dato] "
+labels: ["error-en-dato"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe el problema **sin copiar datos personales**. Indica el archivo, la columna y la fila.
+        Si el error ES un dato personal expuesto, no uses este formulario: sigue SECURITY.md.
+  - type: dropdown
+    id: desafio
+    attributes:
+      label: Desafío
+      options:
+        # dataton:opciones-desafios
+        - "D1 · por definir"
+        - "No sé / varios desafíos"
+        # /dataton
+    validations:
+      required: true
+  - type: input
+    id: archivo
+    attributes:
+      label: Archivo
+    validations:
+      required: true
+  - type: input
+    id: ubicacion
+    attributes:
+      label: Columna y fila (o rango)
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de problema
+      options:
+        - Valor vacío que debería existir
+        - Valor fuera de dominio o mal escrito
+        - Duplicado
+        - Contradicción entre campos o entre fuentes
+        - Coordenada o territorio incorrecto
+        - Otro
+    validations:
+      required: true
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Qué observaste
+      description: Qué esperabas encontrar y qué encontraste.
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidencia
+      description: Fuente, documento o regla que muestra que es un error. Si no la tienes, dilo.

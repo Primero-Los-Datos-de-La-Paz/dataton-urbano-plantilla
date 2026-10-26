@@ -1,0 +1,3 @@
+# Desactiva las incidencias en blanco: cada incidencia usa un formulario.
+# Si encontraste un dato personal o una credencial, NO abras una incidencia: sigue SECURITY.md.
+blank_issues_enabled: false

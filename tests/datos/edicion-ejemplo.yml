@@ -1,0 +1,119 @@
+# Copia fija del edicion.yml vacío de la plantilla, para las pruebas. No la edites.
+#
+# Este es el único archivo donde se escriben nombres, fechas, sede, desafíos,
+# pesos de la rúbrica, responsables, contacto y reglas de visibilidad.
+# Los demás archivos toman esos datos de aquí con:
+#
+#     python -m dataton regenerar
+#
+# Un valor vacío (null) significa "por definir". Las fechas van como AAAA-MM-DD.
+# Ver edicion/README.md para la explicación de cada campo.
+
+version_esquema: 1
+
+edicion:
+  id: null                 # nombre corto sin espacios; se usa como nombre del repositorio de la edición
+  nombre: null             # nombre público del evento
+  programa: null           # programa institucional al que pertenece (si lo hay)
+  numero: null             # número de edición (1 = primera)
+  anio: null
+  descripcion: null        # una o dos frases para el README
+  ciudad: null
+  pais: null
+  institucion:
+    nombre: null
+    sigla: null
+  organizadores: []        # lista de {nombre, sigla, rol}
+  roles: []                # lista de {rol, quien}: quién hace qué en la edición (unidades, no personas)
+  version_repositorio: "0.1.0"
+  fuentes: []              # documentos oficiales de donde salen estos datos
+
+github:
+  organizacion: null
+  repositorios:
+    plantilla: dataton-urbano-plantilla
+    equipo_plantilla: dataton-equipo-plantilla
+    edicion: null
+    paquetes_internos: null
+
+sede:
+  nombre: null
+  direccion: null
+  fuente: null
+
+# Una fila por actividad. Si solo se conoce el mes, deja fecha_inicio en null y usa mes: AAAA-MM.
+calendario:
+  - id: inscripciones
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Inicio de inscripciones."
+    fuente: null
+  - id: apertura
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Apertura, presentación de desafíos y formación de equipos."
+    fuente: null
+  - id: trabajo
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Trabajo de equipos y preparación de datos."
+    fuente: null
+  - id: clinica
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Clínica de datos con mentores."
+    fuente: null
+  - id: presentacion
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Presentación de resultados."
+    fuente: null
+  - id: validacion
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Validación de las mejoras por los responsables de los datos."
+    fuente: null
+
+# Una fila por desafío. El codeowner es un MARCADOR (por ejemplo @RESPONSABLE-D1),
+# no una cuenta real, hasta que la institución designe a la persona o equipo.
+desafios:
+  - id: D1
+    slug: null              # nombre corto para carpetas, por ejemplo "base-digital"
+    titulo: null
+    tipo_indicadores: null  # SMART, ESTRUCTURAL, SOSTENIBLE u otro marco
+    n_indicadores: null
+    alcance: null           # por ejemplo "preparación completa" o "mapeo de fuentes y brechas"
+    nivel_esperado: null    # texto literal de la convocatoria
+    responsable_dato:
+      unidad: null
+      sigla: null
+      codeowner: "@RESPONSABLE-D1"
+    fuente: null
+
+rubrica:
+  fuente: null
+  criterios:                 # los pesos deben sumar 100
+    - {id: calidad, nombre: "Calidad y consistencia del activo de datos", peso: null}
+    - {id: documentacion, nombre: "Documentación y trazabilidad", peso: null}
+    - {id: reproducibilidad, nombre: "Reproducibilidad", peso: null}
+    - {id: cobertura, nombre: "Cobertura del desafío / KPI", peso: null}
+    - {id: territorializacion, nombre: "Territorialización e interoperabilidad", peso: null}
+    - {id: gobernanza, nombre: "Gobernanza y uso responsable", peso: null}
+    - {id: utilidad, nombre: "Utilidad para decisiones y reutilización", peso: null}
+
+# Solo buzones institucionales. Nunca teléfonos ni correos personales.
+contacto:
+  buzon_institucional: null
+  incidencias: true
+  nota: null
+
+visibilidad:
+  regla_general: "Todo repositorio nace privado. Solo pasa a público con aprobación explícita, repositorio por repositorio."
+  repositorios:
+    - {repositorio: plantilla, visibilidad_inicial: privado, visibilidad_prevista: público, condicion: "Aprobación explícita tras la revisión de calidad y privacidad."}
+    - {repositorio: equipo_plantilla, visibilidad_inicial: privado, visibilidad_prevista: público, condicion: "Aprobación explícita tras la revisión de calidad y privacidad."}
+    - {repositorio: edicion, visibilidad_inicial: privado, visibilidad_prevista: público, condicion: "Aprobación explícita; sin datos internos ni datos personales."}
+    - {repositorio: paquetes_internos, visibilidad_inicial: privado, visibilidad_prevista: privado, condicion: "Nunca se hace público."}
+  datos_internos:
+    - "Los datos internos en su forma original solo se guardan en el repositorio de paquetes internos."
+    - "Un dato interno solo sale de allí mediante la compuerta de liberación (docs/compuerta-de-liberacion.md)."

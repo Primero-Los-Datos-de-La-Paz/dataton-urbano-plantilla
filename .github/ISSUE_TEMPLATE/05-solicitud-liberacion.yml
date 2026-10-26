@@ -1,0 +1,84 @@
+name: Solicitud de liberación de datos
+description: Pide que un conjunto interno (o un derivado) pase por la compuerta de liberación para publicarse.
+title: "[Liberación] "
+labels: ["liberacion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        La liberación sigue la compuerta de liberación descrita en `docs/compuerta-de-liberacion.md`.
+        Esta incidencia acompaña el archivo `liberacion.yml` del paquete; no lo reemplaza.
+        **No adjuntes los datos aquí.**
+  - type: dropdown
+    id: desafio
+    attributes:
+      label: Desafío
+      options:
+        # dataton:opciones-desafios
+        - "D1 · por definir"
+        - "No sé / varios desafíos"
+        # /dataton
+    validations:
+      required: true
+  - type: input
+    id: paquete
+    attributes:
+      label: Paquete y conjunto
+      description: Ruta del paquete en el repositorio de paquetes internos.
+    validations:
+      required: true
+  - type: dropdown
+    id: que_se_libera
+    attributes:
+      label: Qué se libera
+      options:
+        - Un derivado agregado
+        - Un derivado anonimizado
+        - El conjunto original (solo si nunca tuvo datos personales)
+    validations:
+      required: true
+  - type: dropdown
+    id: clasificacion
+    attributes:
+      label: Clasificación del conjunto original
+      options:
+        - Público
+        - Interno
+        - Restringido
+    validations:
+      required: true
+  - type: input
+    id: agregacion
+    attributes:
+      label: Nivel mínimo de agregación
+      description: Por ejemplo unidad educativa, distrito o macrodistrito. Indica también el umbral de conteos pequeños, si lo hay.
+    validations:
+      required: true
+  - type: textarea
+    id: decision_responsable
+    attributes:
+      label: Decisión del responsable del dato
+      description: Unidad que decide, fecha de la decisión y referencia del acta o documento (nota, correo institucional o acta).
+    validations:
+      required: true
+  - type: input
+    id: licencia
+    attributes:
+      label: Licencia propuesta para lo que se publica
+    validations:
+      required: true
+  - type: checkboxes
+    id: revisiones
+    attributes:
+      label: Revisiones
+      options:
+        - label: "`python -m dataton verificar-privacidad` pasa sin hallazgos sobre lo que se publica."
+          required: true
+        - label: Se eliminaron los metadatos de autor de los archivos.
+          required: true
+        - label: Se excluyeron las celdas y filas reportadas como posibles datos personales.
+          required: true
+        - label: Las áreas jurídica y de tecnología revisaron las reglas y la privacidad.
+          required: true
+        - label: El derivado se genera con un script reproducible a partir del original.
+          required: true

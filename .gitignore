@@ -1,0 +1,25 @@
+# Entornos y cachés
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Credenciales: nunca en el repositorio
+.env
+*.env
+*.pem
+*.key
+secrets*
+
+# Carpetas de datos internos que nunca deben entrar en un repositorio público
+datos-internos/

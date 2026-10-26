@@ -1,0 +1,24 @@
+LICENCIA DEL CÓDIGO — DECISIÓN PENDIENTE
+
+Este archivo es provisional. La licencia del código de este repositorio
+(carpetas src/ y tests/, y los scripts de las entregas) todavía no está
+decidida.
+
+Quién decide: la dirección jurídica de la institución organizadora
+(ver GOVERNANCE.md).
+
+Mientras no haya una decisión, este repositorio NO otorga ninguna licencia
+de código abierto. No asumas permisos de copia, modificación o
+redistribución más allá de lo que permita la ley.
+
+Opciones propuestas para la decisión (no elegidas):
+
+  - MIT: corta y muy permisiva.
+  - Apache-2.0: permisiva, con cláusula explícita de patentes.
+  - EUPL-1.2: pensada para administraciones públicas; obliga a compartir
+    las mejoras bajo la misma licencia.
+
+Cuando se decida, este archivo se reemplaza por el texto oficial completo
+de la licencia elegida, sin modificaciones.
+
+La licencia de los DATOS es otra cosa: ver LICENSE-DATOS.md.

@@ -1,0 +1,63 @@
+name: Solicitud de validación
+description: Pide al responsable del dato que acepte o rechace una mejora.
+title: "[Validación] "
+labels: ["validacion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        El equipo completa las primeras secciones. **El responsable del dato** completa la decisión y el motivo.
+        Sin una decisión registrada, la mejora no se incorpora al catálogo institucional.
+  - type: dropdown
+    id: desafio
+    attributes:
+      label: Desafío
+      options:
+        # dataton:opciones-desafios
+        - "D1 · por definir"
+        - "No sé / varios desafíos"
+        # /dataton
+    validations:
+      required: true
+  - type: input
+    id: conjunto
+    attributes:
+      label: Conjunto de datos
+      description: Nombre del conjunto y ruta del paquete.
+    validations:
+      required: true
+  - type: textarea
+    id: mejora
+    attributes:
+      label: Mejora propuesta
+      description: Qué cambió entre el antes y el después, y en qué nivel de la escala 0–7 queda.
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidencia
+      description: Enlace a la entrega, al procedimiento reproducible y a la medición antes/después.
+    validations:
+      required: true
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Decisión del responsable del dato
+      description: La completa el responsable del dato.
+      options:
+        - Pendiente
+        - Aceptada
+        - Rechazada
+    validations:
+      required: true
+  - type: textarea
+    id: motivo
+    attributes:
+      label: Motivo de la decisión
+      description: Obligatorio si la mejora se acepta o se rechaza.
+  - type: input
+    id: unidad
+    attributes:
+      label: Unidad responsable que decide
+      description: Nombre de la unidad, no de una persona.

@@ -1,0 +1,47 @@
+name: Acuerdo de reglas de uso
+description: Cada equipo acepta las reglas de uso antes de recibir datos internos.
+title: "[Acuerdo de reglas] Equipo "
+labels: ["acuerdo-reglas"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Lee las reglas de uso del paquete (`reglas-de-uso.md`) antes de marcar las casillas.
+        Esta incidencia queda como registro del acuerdo del equipo.
+  - type: input
+    id: equipo
+    attributes:
+      label: Código del equipo
+      description: Por ejemplo d5-eq01. No escribas datos personales aquí.
+    validations:
+      required: true
+  - type: dropdown
+    id: desafio
+    attributes:
+      label: Desafío
+      options:
+        # dataton:opciones-desafios
+        - "D1 · por definir"
+        - "No sé / varios desafíos"
+        # /dataton
+    validations:
+      required: true
+  - type: checkboxes
+    id: reglas
+    attributes:
+      label: El equipo acepta que
+      options:
+        - label: Usará los datos solo para los fines del datatón.
+          required: true
+        - label: No republicará ni compartirá los datos internos fuera del equipo.
+          required: true
+        - label: No intentará identificar personas ni cruzará datos con ese fin.
+          required: true
+        - label: Si encuentra un dato personal, avisará de inmediato por el buzón institucional y no lo copiará (SECURITY.md).
+          required: true
+        - label: Dejará el dato original sin editar y documentará cada cambio de forma reproducible.
+          required: true
+        - label: No presentará estimaciones sin evidencia ni cálculos como cifras oficiales.
+          required: true
+        - label: Todas las personas del equipo leyeron estas reglas.
+          required: true

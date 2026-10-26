@@ -1,0 +1,28 @@
+# Escala de preparación de datos, de 0 a 7.
+# Cada conjunto se clasifica antes y después del datatón.
+niveles:
+  - nivel: 0
+    nombre: Desconocido
+    descripcion: "No se sabe si el dato existe o dónde está."
+  - nivel: 1
+    nombre: Identificado
+    descripcion: "La fuente está localizada."
+  - nivel: 2
+    nombre: Documentado
+    descripcion: "Tiene definición, periodicidad y responsable."
+  - nivel: 3
+    nombre: Depurado
+    descripcion: "Cumple criterios mínimos de calidad."
+  - nivel: 4
+    nombre: Conectable
+    descripcion: "Puede relacionarse con otros datos mediante identificadores o claves territoriales."
+  - nivel: 5
+    nombre: Reutilizable
+    descripcion: "Puede analizarlo cualquier persona autorizada."
+  - nivel: 6
+    nombre: Accionable
+    descripcion: "Puede responder una pregunta o apoyar una decisión concreta."
+  - nivel: 7
+    nombre: Listo para Ciudad Inteligente
+    descripcion: "Tiene condiciones suficientes para alimentar, de forma controlada, interfaces de programación (API), plataformas, servicios, sensores, analítica o modelos."
+# Los criterios verificables de cada nivel se agregan cuando se construya el comando "nivel".

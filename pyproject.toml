@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools==75.8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataton"
+version = "0.1.0"
+description = "Herramientas del datatón urbano de preparación de datos"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

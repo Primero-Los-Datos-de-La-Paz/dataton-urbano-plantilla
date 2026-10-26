@@ -1,0 +1,31 @@
+# Compuerta de liberación (ver docs/compuerta-de-liberacion.md).
+# Solo para paquetes con datos internos. Mientras "aprobado" no sea true y
+# todos los campos estén completos, ninguna herramienta exporta los datos.
+aprobado: false
+
+conjunto: null                 # nombre del conjunto de datos original
+que_se_libera: null            # derivado-agregado | derivado-anonimizado | original
+clasificacion: null            # publico | interno | restringido
+
+agregacion_minima:
+  nivel: null                  # por ejemplo: unidad-educativa, distrito, macrodistrito
+  umbral_conteos_pequenos: null  # por ejemplo: suprimir conteos menores que N; null si se decide no aplicar
+  columnas_incluidas: []
+  columnas_excluidas: []
+
+decision_responsable:
+  unidad: null                 # unidad responsable del dato (no una persona)
+  decision: null               # aprobada | rechazada
+  fecha: null                  # AAAA-MM-DD
+  referencia_acta: null        # número o referencia de la nota, acta o correo institucional
+
+revision_privacidad:
+  verificar_privacidad: null   # resultado de python -m dataton verificar-privacidad: sin-hallazgos | con-hallazgos
+  metadatos_autor_eliminados: false
+  exclusiones: []              # archivo, columna y fila excluidos por posibles datos personales (sin copiar valores)
+  revision_juridica: null      # referencia de la revisión del área jurídica
+  revision_tecnologia: null    # referencia de la revisión del área de tecnología
+
+licencia: null                 # licencia de lo que se publica
+script_derivado: null          # ruta del script que genera el derivado desde el original
+incidencia: null               # número de la incidencia "Solicitud de liberación de datos"
