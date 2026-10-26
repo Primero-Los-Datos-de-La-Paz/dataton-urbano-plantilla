@@ -1,0 +1,22 @@
+{
+  "$comment": "Esquema de catalogo/fuentes.csv en formato Frictionless Table Schema. Una fila por fuente.",
+  "fields": [
+    {"name": "id", "type": "string", "description": "Identificador único de la fuente, por ejemplo F001.", "constraints": {"required": true, "unique": true, "pattern": "^F[0-9]{3}$"}},
+    {"name": "nombre", "type": "string", "description": "Nombre del conjunto o de la fuente.", "constraints": {"required": true}},
+    {"name": "institucion", "type": "string", "description": "Institución productora o responsable. Nunca el nombre de una persona.", "constraints": {"required": true}},
+    {"name": "tipo", "type": "string", "description": "Cómo se accede a la fuente.", "constraints": {"required": true, "enum": ["portal", "api", "github", "archivo", "manual"]}},
+    {"name": "url", "type": "string", "description": "URL comprobada en la fecha de acceso. Vacía si no se verificó ninguna.", "constraints": {"pattern": "^(https?://\\S+)?$"}},
+    {"name": "formato", "type": "string", "description": "Formatos disponibles, separados por punto y coma."},
+    {"name": "licencia_o_terminos", "type": "string", "description": "Licencia o términos de uso tal como se leyeron, o SIN VERIFICAR.", "constraints": {"required": true}},
+    {"name": "redistribuible", "type": "string", "description": "si: se puede copiar al repositorio; no: no se copia; verificar: falta confirmar.", "constraints": {"required": true, "enum": ["si", "no", "verificar"]}},
+    {"name": "fecha_acceso", "type": "date", "format": "%Y-%m-%d", "description": "Fecha en que se consultó la fuente (AAAA-MM-DD)."},
+    {"name": "cobertura_temporal", "type": "string", "description": "Periodo que cubren los datos."},
+    {"name": "cobertura_territorial", "type": "string", "description": "Territorio que cubren los datos."},
+    {"name": "periodicidad", "type": "string", "description": "Frecuencia de actualización, o Desconocida."},
+    {"name": "desafio", "type": "string", "description": "Desafíos relacionados (D1 a D5 o transversal), separados por punto y coma.", "constraints": {"required": true, "pattern": "^((D[1-9]|transversal)(;(D[1-9]|transversal))*)$"}},
+    {"name": "indicador", "type": "string", "description": "Identificadores de indicador o ficha relacionados, separados por punto y coma."},
+    {"name": "estado_verificacion", "type": "string", "description": "VERIFICADO: se accedió y se leyó la licencia. ACCESIBLE: el sitio responde, pero no se verificó un archivo ni una licencia. SIN VERIFICAR: no se pudo comprobar. DESCARTADA: verificada, pero no sirve para el desafío.", "constraints": {"required": true, "enum": ["VERIFICADO", "ACCESIBLE", "SIN VERIFICAR", "DESCARTADA"]}},
+    {"name": "notas", "type": "string", "description": "Observaciones. Sin datos personales."}
+  ],
+  "primaryKey": ["id"]
+}
