@@ -13,4 +13,4 @@ Esta carpeta guarda las instrucciones con las que se construyen los repositorios
 | P6 | Documentación |
 | P7 | Revisión de calidad, ensayo y publicación controlada |
 
-La plantilla no incluye los prompts de ninguna edición concreta, porque contienen datos de esa ciudad. Cada edición guarda los suyos en su propia carpeta `prompts/`.
+La plantilla no incluye los prompts de ninguna edición concreta, porque contienen datos de esa ciudad (nombres de unidades, archivos internos, fechas). Cómo reutilizarlos: [docs/nueva-edicion.md](../docs/nueva-edicion.md#reutilizar-los-prompts).

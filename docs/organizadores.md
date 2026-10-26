@@ -1,6 +1,45 @@
-# Guía para organizadores: equipos, entregas y evaluación
+# Guía para organizadores
 
-> Versión inicial. Las listas de control completas de antes, durante y después se agregan en una fase posterior.
+Esta guía tiene dos partes: las **listas de control** de antes, durante y después del datatón, y el **paso a paso** con las herramientas (secciones 0 a 6).
+
+## Listas de control
+
+### Antes
+
+- [ ] `edicion/edicion.yml` completo y revisado contra la convocatoria. Después, `python -m dataton regenerar` y `regenerar --comprobar`.
+- [ ] Responsables del dato designados por desafío, con su punto focal.
+- [ ] Paquetes de datos listos: original con su suma, procedencia, reglas de uso, problemas observados y medición "antes" (`linea-base/`).
+- [ ] Datos internos solo en el repositorio privado de paquetes internos.
+- [ ] `python -m dataton verificar-privacidad .` sin hallazgos graves en los repositorios que serán públicos.
+- [ ] Plantilla de equipo en la organización y marcada como repositorio plantilla.
+- [ ] Alcance `admin:org` en la cuenta de `gh` que creará los equipos.
+- [ ] Jurado designado, con la declaración de conflictos firmada.
+- [ ] Mentores informados de la fecha de la clínica: <!-- dataton:fecha clinica -->(por definir en edicion/edicion.yml)<!-- /dataton -->.
+- [ ] Buzón institucional activo y conocido por los equipos.
+
+### Durante
+
+- [ ] **Apertura** (<!-- dataton:fecha apertura -->(por definir en edicion/edicion.yml)<!-- /dataton -->): presentar los desafíos, dar la orientación sobre datos y formar los equipos.
+- [ ] Recoger `edicion/equipos.csv` y ejecutar `crear-equipos` (sección 2).
+- [ ] Comprobar que cada equipo aceptó las reglas: incidencia "Acuerdo de reglas de uso" cerrada.
+- [ ] Dar acceso a los paquetes internos solo después del acuerdo.
+- [ ] Atender las consultas por escrito y derivar las de contenido a los responsables del dato.
+- [ ] Recordar el **cierre de entregas**: <!-- dataton:fecha cierre_entregas limite -->(por definir en edicion/edicion.yml)<!-- /dataton -->.
+- [ ] Ante un dato personal subido por error, seguir [SECURITY.md](../SECURITY.md) **de inmediato**.
+
+### Después
+
+- [ ] `congelar` las entregas al cierre (sección 4).
+- [ ] `recolectar` la evidencia y repartir los informes al jurado (sección 5).
+- [ ] Ejecutar `reproducir --ejecutar` en un entorno aislado para las entregas con scripts.
+- [ ] Recoger las hojas del jurado y consolidar los puntajes.
+- [ ] **Presentación de resultados:** <!-- dataton:fecha presentacion -->(por definir en edicion/edicion.yml)<!-- /dataton -->.
+- [ ] Validación de las mejoras por los responsables del dato (<!-- dataton:fecha validacion -->(por definir en edicion/edicion.yml)<!-- /dataton -->), con un acta por mejora.
+- [ ] Incorporar al catálogo **solo** las mejoras aceptadas, con mención de la autoría de quienes la consintieron (`autoria.yml`).
+- [ ] Liberar derivados de datos internos **solo** por la compuerta de liberación.
+- [ ] Informe de aprendizaje (<!-- dataton:fecha informe -->(por definir en edicion/edicion.yml)<!-- /dataton -->) con [lecciones-aprendidas.md](lecciones-aprendidas.md).
+
+---
 
 Todos los comandos se ejecutan desde la carpeta del repositorio de la edición, con las herramientas instaladas (ver el README). **Todo lo que cambia GitHub es una simulación salvo que agregues `--ejecutar`**, y aun así pide escribir `si` antes de hacer cualquier cambio.
 
@@ -56,11 +95,11 @@ Las personas reciben una invitación por correo y deben **aceptarla** antes de p
 ## 4. Congelar las entregas al cierre
 
 ```bash
-python -m dataton congelar --csv edicion/equipos.csv --fecha-limite 2099-01-31T18:00:00-04:00            # simulación
-python -m dataton congelar --csv edicion/equipos.csv --fecha-limite 2099-01-31T18:00:00-04:00 --ejecutar
+python -m dataton congelar --csv edicion/equipos.csv            # simulación
+python -m dataton congelar --csv edicion/equipos.csv --ejecutar
 ```
 
-La fecha límite va en formato ISO, **con zona horaria**. Usa la de tu convocatoria; el ejemplo es ficticio. Para cada repositorio, el comando:
+La fecha límite se toma de `edicion.yml` (`calendario`, actividad `cierre_entregas`, campo `fecha_hora_limite`): <!-- dataton:fecha cierre_entregas limite -->(por definir en edicion/edicion.yml)<!-- /dataton -->. Se puede cambiar con `--fecha-limite`, en formato ISO y con zona horaria. Para cada repositorio, el comando:
 
 1. registra en `evaluacion/entregas.csv` el SHA de `main`, la fecha de ese commit y si quedó dentro del plazo;
 2. crea la etiqueta `entrega-final` en ese SHA;

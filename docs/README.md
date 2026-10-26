@@ -2,15 +2,20 @@
 
 | Documento | Para quién |
 |---|---|
-| [arquitectura.md](arquitectura.md) | Organizadores y mantenedores: cómo están organizados los repositorios |
-| [compuerta-de-liberacion.md](compuerta-de-liberacion.md) | Responsables del dato y organizadores: cómo se publica un dato interno |
-| [nueva-edicion.md](nueva-edicion.md) | Quien quiera organizar su propia edición a partir de esta plantilla |
+| [guia-participante.md](guia-participante.md) | Participantes: de principio a fin, con y sin programación |
+| [guia-responsable-del-dato.md](guia-responsable-del-dato.md) | Unidades responsables de los datos: qué entregan y cómo validan |
+| [guia-jurado.md](guia-jurado.md) | Jurado: cómo valorar una entrega |
+| [guia-mentores.md](guia-mentores.md) | Mentores: calidad, documentación, información geográfica y privacidad |
+| [organizadores.md](organizadores.md) | Organizadores: listas de control y paso a paso con las herramientas |
+| [nueva-edicion.md](nueva-edicion.md) | Quien quiera organizar su propia edición en una hora |
+| [preguntas-frecuentes.md](preguntas-frecuentes.md) | Todos |
+| [glosario.md](glosario.md) | Todos: los términos explicados |
 | [metricas.md](metricas.md) | Jurado, mentores y equipos: cómo se calcula cada medición |
+| [compuerta-de-liberacion.md](compuerta-de-liberacion.md) | Responsables del dato y organizadores: cómo se publica un derivado de un dato interno |
+| [arquitectura.md](arquitectura.md) | Mantenedores: cómo están organizados los repositorios |
 | [windows.md](windows.md) | Quien use Windows: instalación y comandos |
 | [github-actions.md](github-actions.md) | Organizadores: validación automática y cuota de minutos |
-| [organizadores.md](organizadores.md) | Organizadores: crear equipos, congelar entregas, reunir la evidencia y equipos sin GitHub |
-
-En fases posteriores se agregan: la guía del participante, la guía del responsable del dato, las guías del jurado y de los mentores, las listas de control completas de los organizadores, las preguntas frecuentes, el glosario y la plantilla de lecciones aprendidas.
+| [lecciones-aprendidas.md](lecciones-aprendidas.md) | Organizadores: plantilla del informe de aprendizaje |
 
 ## Comandos
 

@@ -55,7 +55,7 @@ def planificar(raiz: Path) -> Plan:
         scripts_dir = raiz / "entrega" / "scripts"
         ck = raiz / "entrega" / "salida" / "checksums.sha256"
         return Plan("entrega", raiz, sorted(scripts_dir.glob("*.py")) if scripts_dir.is_dir() else [],
-                    sorted(p for p in scripts_dir.glob("*") if p.is_file() and p.suffix != ".py") if scripts_dir.is_dir() else [],
+                    sorted(p for p in scripts_dir.glob("*") if p.is_file() and p.suffix not in (".py", ".md")) if scripts_dir.is_dir() else [],
                     ck, "", ck.parent)
     scripts_dir = raiz / "scripts"
     return Plan("paquete", raiz, sorted(scripts_dir.glob("*.py")) if scripts_dir.is_dir() else [],
@@ -64,6 +64,7 @@ def planificar(raiz: Path) -> Plan:
 
 
 def reproducir(raiz: Path, ejecutar: bool = False) -> ResultadoReproduccion:
+    raiz = raiz.resolve()  # "." no tiene nombre: sin esto, la copia temporal no tendría carpeta propia
     plan = planificar(raiz)
     res = ResultadoReproduccion(plan)
     if not plan.checksums.is_file():

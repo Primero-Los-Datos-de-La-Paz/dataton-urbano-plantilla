@@ -208,11 +208,14 @@ def cmd_congelar(args: argparse.Namespace) -> int:
     if args.dry_run and args.ejecutar:
         print("ERROR: --dry-run y --ejecutar no pueden usarse juntos.", file=sys.stderr)
         return 1
-    org = args.org or (_edicion_local().get("github") or {}).get("organizacion")
-    if not org:
-        print("ERROR: indica --org.", file=sys.stderr)
+    ed = _edicion_local()
+    org = args.org or (ed.get("github") or {}).get("organizacion")
+    limite = args.fecha_limite or next((str(a.get("fecha_hora_limite") or "") for a in ed.get("calendario") or []
+                                        if a.get("id") == "cierre_entregas"), "")
+    if not org or not limite:
+        print("ERROR: indica --org y --fecha-limite, o complétalos en edicion/edicion.yml.", file=sys.stderr)
         return 1
-    return equipos.congelar(_repos_de(args), org, args.fecha_limite, ejecutar=args.ejecutar, registro=Path(args.registro))
+    return equipos.congelar(_repos_de(args), org, limite, ejecutar=args.ejecutar, registro=Path(args.registro))
 
 
 def cmd_recolectar(args: argparse.Namespace) -> int:
@@ -313,7 +316,8 @@ def construir_parser() -> argparse.ArgumentParser:
 
     pg = sub.add_parser("congelar", help="Registra el SHA de main, etiqueta entrega-final y archiva (simulación por defecto).")
     pg.add_argument("--org", help="Organización de GitHub (por defecto, la de edicion.yml).")
-    pg.add_argument("--fecha-limite", required=True, help="Fecha y hora límite en ISO 8601 con zona horaria.")
+    pg.add_argument("--fecha-limite", help="Fecha y hora límite en ISO 8601 con zona horaria "
+                    "(por defecto, calendario.cierre_entregas.fecha_hora_limite de edicion.yml).")
     g = pg.add_mutually_exclusive_group(required=True)
     g.add_argument("--csv", help="CSV de equipos (los nombres de repositorio se calculan de él).")
     g.add_argument("--repos", help="Lista de repositorios separados por comas.")

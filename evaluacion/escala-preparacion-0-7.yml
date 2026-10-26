@@ -4,7 +4,7 @@
 # "criterios" son las comprobaciones que hace `python -m dataton nivel` para PROPONER un nivel.
 # El nivel propuesto es el más alto cuyos criterios se cumplen todos, junto con los de los niveles anteriores.
 # Los niveles 6 y 7 no se proponen de forma automática: requieren revisión humana.
-# Los umbrales son una propuesta inicial, para revisar con el jurado y la UIIEM (ver docs/metricas.md).
+# Los umbrales son una propuesta inicial, para revisar con el jurado y con la unidad de estadística de la institución (ver docs/metricas.md).
 
 umbrales:
   documentacion: 0.80     # proporción de columnas con descripción en diccionario.csv

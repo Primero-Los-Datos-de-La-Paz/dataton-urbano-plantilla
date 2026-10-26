@@ -18,6 +18,7 @@ edicion:
   numero: null             # número de edición (1 = primera)
   anio: null
   descripcion: null        # una o dos frases para el README
+  reconocimiento: null     # qué reciben los equipos, tal como lo dice la convocatoria (no prometas premios que no estén en ella)
   ciudad: null
   pais: null
   institucion:
@@ -27,6 +28,17 @@ edicion:
   roles: []                # lista de {rol, quien}: quién hace qué en la edición (unidades, no personas)
   version_repositorio: "0.1.0"
   fuentes: []              # documentos oficiales de donde salen estos datos
+
+# Qué unidad cumple cada función (los textos de gobernanza, seguridad y guías los toman de aquí).
+areas:
+  organizacion: null   # unidad o unidades que ejecutan el datatón
+  aprobacion: null     # unidad que aprueba la edición y sus cambios
+  juridica: null       # revisa reglas de uso, licencias y privacidad
+  tecnologia: null     # revisión técnica, entorno seguro y respuesta a incidentes
+  estadistica: null    # revisa las fichas de indicadores antes de cualquier uso oficial
+
+# Matriz RACI: R hace, A responde (una sola), C es consultada, I es informada.
+raci: []   # lista de {actividad, R, A, C, I}
 
 github:
   organizacion: null
@@ -63,6 +75,12 @@ calendario:
     fecha_fin: null
     actividad: "Clínica de datos con mentores."
     fuente: null
+  - id: cierre_entregas
+    fecha_inicio: null
+    fecha_fin: null
+    fecha_hora_limite: null   # AAAA-MM-DDTHH:MM:SS±HH:MM, con zona horaria; la usa `python -m dataton congelar`
+    actividad: "Cierre de entregas de los equipos."
+    fuente: null
   - id: presentacion
     fecha_inicio: null
     fecha_fin: null
@@ -72,6 +90,11 @@ calendario:
     fecha_inicio: null
     fecha_fin: null
     actividad: "Validación de las mejoras por los responsables de los datos."
+    fuente: null
+  - id: informe
+    fecha_inicio: null
+    fecha_fin: null
+    actividad: "Informe de aprendizaje de la edición."
     fuente: null
 
 # Una fila por desafío. El codeowner es un MARCADOR (por ejemplo @RESPONSABLE-D1),

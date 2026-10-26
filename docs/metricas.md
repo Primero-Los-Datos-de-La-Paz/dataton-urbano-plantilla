@@ -69,7 +69,7 @@ El comando **propone** el nivel más alto cuyos criterios se cumplen todos, junt
 | 5 Reutilizable | Accesibilidad = 100 % y existe `reglas-de-uso.md` |
 | 6 Accionable y 7 Listo para Ciudad Inteligente | **Revisión humana**: el comando nunca los propone |
 
-Umbrales iniciales (para revisar con el jurado y la UIIEM): documentación 80 %, completitud 90 %, validez 95 %, consistencia 95 %, territorialidad 80 %.
+Umbrales iniciales (para revisar con el jurado y con la unidad de estadística de la institución): documentación 80 %, completitud 90 %, validez 95 %, consistencia 95 %, territorialidad 80 %.
 
 ## Reproducibilidad (`python -m dataton reproducir`)
 

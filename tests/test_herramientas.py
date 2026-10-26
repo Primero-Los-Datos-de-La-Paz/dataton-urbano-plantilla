@@ -128,6 +128,11 @@ def test_reproducir_ejecuta_en_copia_y_compara(base):
     assert (entrega / "entrega" / "salida" / "resultado.csv").read_bytes() == antes
 
 
+def test_reproducir_desde_la_carpeta_actual(base, monkeypatch):
+    monkeypatch.chdir(base / "entrega-demo")
+    assert reproducir.reproducir(Path("."), ejecutar=True).ok
+
+
 def test_reproducir_detecta_diferencia(base):
     script = base / "entrega-demo" / "entrega" / "scripts" / "01_sumar.py"
     script.write_text(script.read_text(encoding="utf-8").replace('int(f["a"]) + int(f["b"])', '0'), encoding="utf-8")

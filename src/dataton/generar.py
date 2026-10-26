@@ -101,6 +101,14 @@ def b_fecha(ed: dict, args: list[str]) -> str:
         return fecha_larga(act.get("fecha_inicio"))
     if cual == "fin":
         return fecha_larga(act.get("fecha_fin") or act.get("fecha_inicio"))
+    if cual == "limite":
+        valor = act.get("fecha_hora_limite")
+        if not valor:
+            return POR_DEFINIR_TEXTO
+        momento = valor if isinstance(valor, dt.datetime) else dt.datetime.fromisoformat(str(valor))
+        zona = momento.strftime("%z")
+        zona = f"UTC{zona[:3]}:{zona[3:]}" if zona else "sin zona horaria"
+        return f"{fecha_larga(momento.date())}, a las {momento:%H:%M} ({zona})"
     return texto_actividad(act)
 
 
@@ -173,6 +181,16 @@ def b_roles(ed: dict, args: list[str]) -> str:
     return "\n".join(filas)
 
 
+def b_raci(ed: dict, args: list[str]) -> str:
+    filas = ["| Actividad | R (hace) | A (responde) | C (consultado) | I (informado) |", "|---|---|---|---|---|"]
+    for r in ed.get("raci") or []:
+        filas.append(f"| {_celda(r.get('actividad'))} | {_celda(r.get('R'))} | {_celda(r.get('A'))} | "
+                     f"{_celda(r.get('C'))} | {_celda(r.get('I'))} |")
+    if len(filas) == 2:
+        filas.append(f"| {POR_DEFINIR} | | | | |")
+    return "\n".join(filas)
+
+
 def b_contacto(ed: dict, args: list[str]) -> str:
     c = ed.get("contacto") or {}
     buzon = c.get("buzon_institucional")
@@ -213,6 +231,7 @@ BLOQUES_MD = {
     "rubrica-hoja": b_rubrica_hoja,
     "responsables": b_responsables,
     "roles": b_roles,
+    "raci": b_raci,
     "contacto": b_contacto,
     "visibilidad": b_visibilidad,
 }
