@@ -104,6 +104,17 @@ def b_fecha(ed: dict, args: list[str]) -> str:
     return texto_actividad(act)
 
 
+def b_desafio(ed: dict, args: list[str]) -> str:
+    """Un campo de un desafío: <!-- dataton:desafio D1 nivel_esperado -->."""
+    if len(args) != 2:
+        raise ErrorBloque("El bloque 'desafio' necesita dos argumentos: código y campo")
+    for d in ed.get("desafios") or []:
+        if d.get("id") == args[0]:
+            valor = _obtener(d, args[1])
+            return POR_DEFINIR if valor in (None, "") else str(valor)
+    raise ErrorBloque(f"No existe el desafío '{args[0]}' en edicion.yml")
+
+
 def b_calendario(ed: dict, args: list[str]) -> str:
     filas = ["| Fecha | Actividad |", "|---|---|"]
     for act in ed.get("calendario") or []:
@@ -184,6 +195,7 @@ def b_visibilidad(ed: dict, args: list[str]) -> str:
 BLOQUES_MD = {
     "valor": b_valor,
     "fecha": b_fecha,
+    "desafio": b_desafio,
     "calendario": b_calendario,
     "desafios": b_desafios,
     "rubrica": b_rubrica,
@@ -194,7 +206,7 @@ BLOQUES_MD = {
 }
 
 # Bloques que van en una sola línea de texto (no llevan saltos de línea alrededor).
-EN_LINEA = {"valor", "fecha"}
+EN_LINEA = {"valor", "fecha", "desafio"}
 
 
 # --- bloques de línea (YAML, CODEOWNERS) ---------------------------------------

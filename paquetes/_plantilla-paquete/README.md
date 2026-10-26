@@ -14,7 +14,7 @@
 
 | Archivo | Descripción | Formato | Suma SHA-256 |
 |---|---|---|---|
-| `data/raw/…` | | | ver `data/raw/checksums.sha256` |
+| `data/raw/…` | | | ver `checksums.sha256` |
 
 ## Fuente y responsable
 

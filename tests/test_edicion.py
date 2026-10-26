@@ -71,6 +71,14 @@ def test_bloque_md_se_reemplaza_y_es_idempotente():
     assert generar.procesar_md(una, ed) == una
 
 
+def test_bloque_desafio_toma_un_campo():
+    ed = edicion_ficticia()
+    salida = generar.procesar_md("<!-- dataton:desafio D1 nivel_esperado -->x<!-- /dataton -->", ed)
+    assert salida == "<!-- dataton:desafio D1 nivel_esperado -->Documentado<!-- /dataton -->"
+    with pytest.raises(generar.ErrorBloque):
+        generar.procesar_md("<!-- dataton:desafio D9 titulo --><!-- /dataton -->", ed)
+
+
 def test_bloque_de_linea_en_yaml_conserva_sangria():
     ed = edicion_ficticia()
     texto = "options:\n    # dataton:opciones-desafios\n    # /dataton\n"

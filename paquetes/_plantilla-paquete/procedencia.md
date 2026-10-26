@@ -13,7 +13,7 @@
 | Versión | |
 | Nombre original del archivo | |
 | Licencia o términos | |
-| Suma SHA-256 | ver `data/raw/checksums.sha256` |
+| Suma SHA-256 | ver `checksums.sha256` |
 
 ## Cambios mecánicos aplicados en `data/interim/`
 

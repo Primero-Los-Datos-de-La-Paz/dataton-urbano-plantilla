@@ -12,7 +12,8 @@ Para crear un paquete nuevo, copia [`_plantilla-paquete/`](_plantilla-paquete/) 
 |---|---|
 | `README.md` | Ficha de datos: qué es, para qué sirve, qué se espera del equipo |
 | `datapackage.json` | Metadatos legibles por máquina (formato Frictionless Data Package) |
-| `data/raw/` | Datos originales, **sin editar**, con su suma SHA-256 en `checksums.sha256` |
+| `data/raw/` | Datos originales, **sin editar** |
+| `checksums.sha256` | Suma SHA-256 de cada archivo de datos del paquete |
 | `data/interim/` | Conversiones solo mecánicas del original (por ejemplo, de hoja de cálculo a CSV), sin cambiar valores |
 | `diccionario.csv` | Una fila por columna: nombre literal, tipo y descripción |
 | `procedencia.md` | De dónde vienen los datos, fecha, responsable y periodicidad |
