@@ -1,28 +1,61 @@
 # Escala de preparación de datos, de 0 a 7.
 # Cada conjunto se clasifica antes y después del datatón.
+#
+# "criterios" son las comprobaciones que hace `python -m dataton nivel` para PROPONER un nivel.
+# El nivel propuesto es el más alto cuyos criterios se cumplen todos, junto con los de los niveles anteriores.
+# Los niveles 6 y 7 no se proponen de forma automática: requieren revisión humana.
+# Los umbrales son una propuesta inicial, para revisar con el jurado y la UIIEM (ver docs/metricas.md).
+
+umbrales:
+  documentacion: 0.80     # proporción de columnas con descripción en diccionario.csv
+  completitud: 0.90       # en cada tabla
+  validez: 0.95           # en cada tabla con reglas de validez
+  consistencia: 0.95      # en cada tabla con reglas de consistencia
+  territorialidad: 0.80   # en cada tabla con territorio declarado
+
 niveles:
   - nivel: 0
     nombre: Desconocido
     descripcion: "No se sabe si el dato existe o dónde está."
+    criterios: []
   - nivel: 1
     nombre: Identificado
     descripcion: "La fuente está localizada."
+    criterios:
+      - {id: fuente_localizada, descripcion: "datapackage.json tiene al menos un recurso, o procedencia.md declara la fuente"}
   - nivel: 2
     nombre: Documentado
     descripcion: "Tiene definición, periodicidad y responsable."
+    criterios:
+      - {id: diccionario_descrito, descripcion: "Al menos el umbral de documentación de las columnas tiene descripción en diccionario.csv"}
+      - {id: periodicidad_conocida, descripcion: "procedencia.md declara una periodicidad (no vacía, ni 'desconocida', ni 'por confirmar')"}
+      - {id: responsable_conocido, descripcion: "procedencia.md declara un responsable del dato (no vacío, ni 'por confirmar')"}
   - nivel: 3
     nombre: Depurado
     descripcion: "Cumple criterios mínimos de calidad."
+    criterios:
+      - {id: completitud_minima, descripcion: "Cada tabla alcanza el umbral de completitud"}
+      - {id: validez_minima, descripcion: "Cada tabla tiene reglas de validez y alcanza el umbral"}
+      - {id: unicidad_clave, descripcion: "Cada tabla tiene una clave declarada, sin duplicados"}
+      - {id: consistencia_minima, descripcion: "Cada tabla tiene reglas de consistencia y alcanza el umbral"}
   - nivel: 4
     nombre: Conectable
     descripcion: "Puede relacionarse con otros datos mediante identificadores o claves territoriales."
+    criterios:
+      - {id: territorio_o_vinculo, descripcion: "Cada tabla alcanza el umbral de territorialidad, o reglas-calidad.yml declara un vínculo con otra tabla por una clave"}
   - nivel: 5
     nombre: Reutilizable
     descripcion: "Puede analizarlo cualquier persona autorizada."
+    criterios:
+      - {id: formato_abierto_y_licencia, descripcion: "Todos los recursos están en formato abierto y hay licencia o reglas de uso declaradas"}
+      - {id: reglas_de_uso, descripcion: "Existe reglas-de-uso.md"}
   - nivel: 6
     nombre: Accionable
     descripcion: "Puede responder una pregunta o apoyar una decisión concreta."
+    revision_humana: true
+    criterios: []
   - nivel: 7
     nombre: Listo para Ciudad Inteligente
     descripcion: "Tiene condiciones suficientes para alimentar, de forma controlada, interfaces de programación (API), plataformas, servicios, sensores, analítica o modelos."
-# Los criterios verificables de cada nivel se agregan cuando se construya el comando "nivel".
+    revision_humana: true
+    criterios: []

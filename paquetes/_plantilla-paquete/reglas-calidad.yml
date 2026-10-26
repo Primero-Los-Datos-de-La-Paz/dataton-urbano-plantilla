@@ -1,0 +1,15 @@
+# Reglas de medición del paquete (ver docs/metricas.md).
+# Describen CÓMO MEDIR; no corrigen nada. Si una dimensión no tiene reglas, no se mide.
+recursos: {}
+#  data/interim/tabla.csv:
+#    campos_minimos: []          # vacío = todas las columnas
+#    clave: [columna_clave]
+#    validez:
+#      - {columna: columna_clave, patron: "^\\d{8}$"}
+#    consistencia:
+#      - {regla: menor_o_igual, a: funcionando, b: total}
+#    territorio:
+#      coordenadas: coordenadas
+#      recuadro: {lat_min: 0, lat_max: 0, lon_min: 0, lon_max: 0}
+#      fuente_recuadro: ""
+vinculos: []

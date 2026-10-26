@@ -77,8 +77,10 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 pip install -e .
-python -m dataton --help
+python -m dataton demo        # debe terminar con OK
 ```
+
+Guía para Windows: [docs/windows.md](docs/windows.md). Qué mide cada comando: [docs/metricas.md](docs/metricas.md).
 
 ## Contacto
 

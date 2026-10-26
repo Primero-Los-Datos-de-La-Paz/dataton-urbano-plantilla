@@ -28,4 +28,5 @@ revision_privacidad:
 
 licencia: null                 # licencia de lo que se publica
 script_derivado: null          # ruta del script que genera el derivado desde el original
+archivos_publicables: []       # archivos del derivado que se publican (solo formatos abiertos)
 incidencia: null               # número de la incidencia "Solicitud de liberación de datos"

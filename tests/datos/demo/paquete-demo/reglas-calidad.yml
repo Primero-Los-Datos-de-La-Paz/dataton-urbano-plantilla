@@ -1,0 +1,15 @@
+# Reglas de medición de demostración (datos ficticios).
+recursos:
+  data/interim/escuelas.csv:
+    campos_minimos: [codigo, nombre_escuela, total, coordenadas]
+    clave: [codigo]
+    validez:
+      - {columna: codigo, patron: "^\\d{8}$"}
+      - {columna: total, tipo: entero, minimo: 0}
+    consistencia:
+      - {regla: suma, total: total, partes: [inicial, primaria]}
+      - {regla: menor_o_igual, a: computadoras_funcionando, b: computadoras}
+    territorio:
+      coordenadas: coordenadas
+      recuadro: {lat_min: -10.0, lat_max: -9.0, lon_min: -60.0, lon_max: -59.0}
+      fuente_recuadro: "Recuadro ficticio de demostración"

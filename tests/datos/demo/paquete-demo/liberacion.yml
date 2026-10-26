@@ -1,0 +1,25 @@
+aprobado: true
+conjunto: "Escuelas ficticias"
+que_se_libera: derivado-agregado
+clasificacion: interno
+agregacion_minima:
+  nivel: escuela
+  umbral_conteos_pequenos: null
+  columnas_incluidas: [codigo, total]
+  columnas_excluidas: [nombre_escuela, coordenadas]
+decision_responsable:
+  unidad: "Unidad Ficticia de Datos"
+  decision: aprobada
+  fecha: 2099-01-15
+  referencia_acta: "ACTA-FICTICIA-001"
+revision_privacidad:
+  verificar_privacidad: sin-hallazgos
+  metadatos_autor_eliminados: true
+  exclusiones: []
+  revision_juridica: "REV-JUR-FICTICIA-001"
+  revision_tecnologia: "REV-TEC-FICTICIA-001"
+licencia: "CC0-1.0 (ficticia, solo demostración)"
+script_derivado: scripts/generar_derivado.py
+archivos_publicables:
+  - derivado/agregado.csv
+incidencia: null

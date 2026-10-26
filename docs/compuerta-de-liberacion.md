@@ -15,6 +15,7 @@ Todo debe estar en el archivo `liberacion.yml` del paquete (modelo en `paquetes/
 | Revisión de privacidad: herramienta sin hallazgos, metadatos de autor eliminados, exclusiones registradas, revisiones jurídica y de tecnología | `revision_privacidad` |
 | Licencia de lo que se publica | `licencia` |
 | Script reproducible que genera el derivado desde el original | `script_derivado` |
+| Archivos del derivado que se publican, solo en formato abierto | `archivos_publicables` |
 | Aprobación final | `aprobado: true` |
 
 ## Reglas
@@ -25,4 +26,15 @@ Todo debe estar en el archivo `liberacion.yml` del paquete (modelo en `paquetes/
 4. La liberación crea una solicitud de cambios en el repositorio público. Una persona la revisa y la fusiona; nunca se fusiona de forma automática.
 5. Lo publicado conserva la referencia a su `liberacion.yml` para la trazabilidad.
 
-La herramienta que aplica estas reglas (`python -m dataton liberar`) se agrega en una fase posterior.
+## Cómo se usa la herramienta
+
+```bash
+# Simulación (por defecto): muestra qué se publicaría, sin escribir nada.
+python -m dataton liberar RUTA/DEL/PAQUETE --destino RUTA/DEL/CLON/PUBLICO
+
+# Prepara la rama local con el derivado y muestra los comandos para subirla y abrir la solicitud.
+# Solo los ejecuta si escribes "si". Nunca fusiona.
+python -m dataton liberar RUTA/DEL/PAQUETE --destino RUTA/DEL/CLON/PUBLICO --ejecutar
+```
+
+La herramienta se niega si falta cualquier campo, si `aprobado` no es `true`, si un archivo publicable no está en formato abierto o si `verificar-privacidad` encuentra algo grave.

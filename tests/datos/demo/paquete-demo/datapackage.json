@@ -1,0 +1,122 @@
+{
+  "profile": "data-package",
+  "name": "paquete-demo",
+  "title": "Paquete de demostración (ficticio)",
+  "version": "0.1.0",
+  "licenses": [
+    {
+      "name": "CC0-1.0",
+      "title": "Datos ficticios"
+    }
+  ],
+  "resources": [
+    {
+      "name": "data-raw-escuelas",
+      "path": "data/raw/escuelas.csv",
+      "format": "csv",
+      "encoding": "utf-8",
+      "bytes": 328,
+      "hash": "sha256:29a422afafdd6b2a3fe5599c5f63edb104ff8e5018a74056053017c07cd4ed46",
+      "schema": {
+        "fields": [
+          {
+            "name": "codigo",
+            "type": "string"
+          },
+          {
+            "name": "nombre_escuela",
+            "type": "string"
+          },
+          {
+            "name": "total",
+            "type": "string"
+          },
+          {
+            "name": "inicial",
+            "type": "string"
+          },
+          {
+            "name": "primaria",
+            "type": "string"
+          },
+          {
+            "name": "computadoras",
+            "type": "string"
+          },
+          {
+            "name": "computadoras_funcionando",
+            "type": "string"
+          },
+          {
+            "name": "coordenadas",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "data-interim-escuelas",
+      "path": "data/interim/escuelas.csv",
+      "format": "csv",
+      "encoding": "utf-8",
+      "bytes": 328,
+      "hash": "sha256:29a422afafdd6b2a3fe5599c5f63edb104ff8e5018a74056053017c07cd4ed46",
+      "schema": {
+        "fields": [
+          {
+            "name": "codigo",
+            "type": "string"
+          },
+          {
+            "name": "nombre_escuela",
+            "type": "string"
+          },
+          {
+            "name": "total",
+            "type": "string"
+          },
+          {
+            "name": "inicial",
+            "type": "string"
+          },
+          {
+            "name": "primaria",
+            "type": "string"
+          },
+          {
+            "name": "computadoras",
+            "type": "string"
+          },
+          {
+            "name": "computadoras_funcionando",
+            "type": "string"
+          },
+          {
+            "name": "coordenadas",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "derivado-agregado",
+      "path": "derivado/agregado.csv",
+      "format": "csv",
+      "encoding": "utf-8",
+      "bytes": 62,
+      "hash": "sha256:798dd92e9a38304614f623b233f4bca724a8d1098966854c3f2ba1f79b7aed53",
+      "schema": {
+        "fields": [
+          {
+            "name": "codigo",
+            "type": "string"
+          },
+          {
+            "name": "total",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

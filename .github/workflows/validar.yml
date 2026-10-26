@@ -1,0 +1,34 @@
+# Validación ligera: al subir cambios a main, valida los paquetes y revisa la privacidad.
+# En los repositorios privados de una organización con plan gratuito, cada ejecución consume
+# minutos de una cuota mensual. Por eso este flujo es corto y la evaluación completa de las
+# entregas se ejecuta de forma central al cierre (ver docs/github-actions.md).
+name: validar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar herramientas
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+      - name: Textos al día con edicion.yml
+        run: python -m dataton regenerar --comprobar
+      - name: Validar paquetes
+        run: python -m dataton validar --todos
+      - name: Revisar privacidad
+        run: python -m dataton verificar-privacidad .
