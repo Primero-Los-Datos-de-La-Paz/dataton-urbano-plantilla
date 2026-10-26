@@ -13,6 +13,7 @@ from pathlib import Path
 import yaml
 
 RUTA_EDICION = Path("edicion") / "edicion.yml"
+RUTA_RUBRICA = Path("edicion") / "rubrica.yml"
 
 CLAVES_OBLIGATORIAS = [
     "version_esquema",
@@ -117,3 +118,22 @@ def validar(ed: dict) -> tuple[list[str], list[str]]:
         errores.append(f"rubrica: los pesos suman {sum(pesos)}, no 100")
 
     return errores, pendientes
+
+
+def validar_rubrica(ed: dict, ruta: Path) -> list[str]:
+    """Comprueba que rubrica.yml use los mismos criterios que edicion.yml y que tenga escala 0-4 completa.
+    Los pesos NO están en rubrica.yml: se toman de edicion.yml (y allí deben sumar 100)."""
+    if not ruta.is_file():
+        return []
+    rub = cargar(ruta)
+    errores = []
+    ids_ed = [c.get("id") for c in (ed.get("rubrica") or {}).get("criterios") or []]
+    ids_rub = [c.get("id") for c in rub.get("criterios") or []]
+    if sorted(ids_ed) != sorted(ids_rub):
+        errores.append(f"rubrica.yml y edicion.yml no tienen los mismos criterios: {sorted(ids_rub)} frente a {sorted(ids_ed)}")
+    for c in rub.get("criterios") or []:
+        if "peso" in c:
+            errores.append(f"rubrica.yml: el criterio {c.get('id')} repite el peso; los pesos van solo en edicion.yml")
+        if sorted((c.get("escala") or {}).keys()) != [0, 1, 2, 3, 4]:
+            errores.append(f"rubrica.yml: el criterio {c.get('id')} no tiene los descriptores 0 a 4")
+    return errores

@@ -12,7 +12,7 @@ from pathlib import Path
 
 import yaml
 
-from dataton import cli, liberar, nivel, privacidad, reproducir, scorecard, validar
+from dataton import cli, equipos, liberar, nivel, privacidad, recolectar, reproducir, scorecard, validar
 
 RAIZ = Path(__file__).resolve().parents[2]
 DEMO = RAIZ / "tests" / "datos" / "demo"
@@ -87,6 +87,22 @@ def ejecutar() -> list[str]:
             ev, _ = liberar.liberar(paq, destino, ejecutar=True, entrada=lambda _: "no")
             publicado = destino / "paquetes" / paq.name / "liberado" / "agregado.csv"
             comprobar(ev.aprobada and publicado.is_file(), "con --ejecutar crea la rama local con el derivado y no publica sin confirmación")
+
+        print("crear-equipos, congelar y recolectar (simulación)")
+        llamadas = []
+        gh = equipos.GitHub(lambda args: llamadas.append(args))
+        ejemplo = RAIZ / "edicion" / "equipos.ejemplo.csv"
+        comprobar(equipos.crear_equipos(ejemplo, "org-ficticia", "dataton-equipo-plantilla", "paquetes-internos", {"D5"},
+                                        gh=gh, salida=lambda _: None) == 0 and not llamadas,
+                  "crear-equipos simula el plan sin llamar a GitHub")
+        repos = [e.repo for e in equipos.leer_equipos(ejemplo)[0]]
+        comprobar(equipos.congelar(repos, "org-ficticia", "2099-01-02T18:00:00-04:00", gh=gh, salida=lambda _: None) == 0
+                  and not llamadas, "congelar simula el plan sin llamar a GitHub")
+        carpeta = base / "entregas"
+        shutil.copytree(entrega, carpeta / "d1-eq01-demo")
+        inf = recolectar.recolectar([carpeta / "d1-eq01-demo"], escala, base / "informes", salida=lambda _: None)
+        comprobar(inf[0]["validar"]["ok"] and (base / "informes" / "resumen.csv").is_file(),
+                  "recolectar consolida el informe de una entrega")
 
         print("init-edicion")
         # Edición ficticia con los mismos códigos de desafío que el repositorio, para que se generen todos sus bloques.

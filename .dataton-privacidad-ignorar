@@ -1,3 +1,4 @@
 # Rutas que `python -m dataton verificar-privacidad .` no revisa.
 # Solo para datos de prueba con datos personales FICTICIOS a propósito. No agregues datos reales aquí.
 tests/datos/demo/privacidad-mala
+edicion/equipos.ejemplo.csv

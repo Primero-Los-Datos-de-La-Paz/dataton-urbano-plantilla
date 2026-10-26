@@ -144,6 +144,17 @@ def b_rubrica(ed: dict, args: list[str]) -> str:
     return "\n".join(filas)
 
 
+def b_rubrica_hoja(ed: dict, args: list[str]) -> str:
+    """Tabla para que el jurado anote la nota (0 a 4) de cada criterio, con su peso."""
+    filas = ["| Criterio | Peso | Nota (0 a 4) | Puntaje = peso × nota ÷ 4 | Evidencia revisada y comentario |",
+             "|---|---:|:---:|---:|---|"]
+    for c in (ed.get("rubrica") or {}).get("criterios") or []:
+        peso = c.get("peso")
+        filas.append(f"| {_celda(c.get('nombre'))} (`{c.get('id')}`) | {POR_DEFINIR if peso is None else peso} | | | |")
+    filas.append("| **Total** | | | **(suma)** | |")
+    return "\n".join(filas)
+
+
 def b_responsables(ed: dict, args: list[str]) -> str:
     filas = ["| Desafío | Responsable del dato | Marcador en CODEOWNERS |", "|---|---|---|"]
     for d in ed.get("desafios") or []:
@@ -199,6 +210,7 @@ BLOQUES_MD = {
     "calendario": b_calendario,
     "desafios": b_desafios,
     "rubrica": b_rubrica,
+    "rubrica-hoja": b_rubrica_hoja,
     "responsables": b_responsables,
     "roles": b_roles,
     "contacto": b_contacto,

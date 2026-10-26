@@ -88,6 +88,7 @@ desafios:
       unidad: null
       sigla: null
       codeowner: "@RESPONSABLE-D1"
+    paquete_interno: false  # true si el desafío tiene un paquete en el repositorio de paquetes internos
     fuente: null
 
 rubrica:

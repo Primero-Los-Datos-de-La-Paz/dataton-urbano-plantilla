@@ -31,6 +31,7 @@ def cmd_init_edicion(args: argparse.Namespace) -> int:
 
     ed = edicion.cargar(ruta_ed)
     errores, pendientes = edicion.validar(ed)
+    errores += edicion.validar_rubrica(ed, origen / edicion.RUTA_RUBRICA)
     _informar(errores, pendientes)
     if errores:
         return 1
@@ -53,6 +54,7 @@ def cmd_regenerar(args: argparse.Namespace) -> int:
     raiz = Path(args.raiz).resolve()
     ed = edicion.cargar(raiz / edicion.RUTA_EDICION)
     errores, pendientes = edicion.validar(ed)
+    errores += edicion.validar_rubrica(ed, raiz / edicion.RUTA_RUBRICA)
     _informar(errores, pendientes)
     if errores:
         return 1
@@ -168,6 +170,87 @@ def cmd_demo(args: argparse.Namespace) -> int:
     return 0
 
 
+def _edicion_local() -> dict:
+    ruta = Path(edicion.RUTA_EDICION)
+    return edicion.cargar(ruta) if ruta.is_file() else {}
+
+
+def _repos_de(args: argparse.Namespace) -> list[str]:
+    from dataton import equipos
+    if args.repos:
+        return [r.strip() for r in args.repos.split(",") if r.strip()]
+    lista, errores = equipos.leer_equipos(Path(args.csv))
+    if errores:
+        raise SystemExit("ERROR: " + "; ".join(errores))
+    return [e.repo for e in lista]
+
+
+def cmd_crear_equipos(args: argparse.Namespace) -> int:
+    from dataton import equipos
+    if args.dry_run and args.ejecutar:
+        print("ERROR: --dry-run y --ejecutar no pueden usarse juntos.", file=sys.stderr)
+        return 1
+    ed = _edicion_local()
+    gh = ed.get("github") or {}
+    org = args.org or gh.get("organizacion")
+    plantilla = args.plantilla_equipo or (gh.get("repositorios") or {}).get("equipo_plantilla")
+    internos = args.paquetes_internos or (gh.get("repositorios") or {}).get("paquetes_internos")
+    con_interno = {d["id"] for d in ed.get("desafios") or [] if d.get("paquete_interno")}
+    if not org or not plantilla:
+        print("ERROR: indica --org y --plantilla-equipo, o complétalos en edicion/edicion.yml.", file=sys.stderr)
+        return 1
+    return equipos.crear_equipos(Path(args.csv), org, plantilla, internos, con_interno, ejecutar=args.ejecutar,
+                                 registro=Path(args.registro) if args.registro else None)
+
+
+def cmd_congelar(args: argparse.Namespace) -> int:
+    from dataton import equipos
+    if args.dry_run and args.ejecutar:
+        print("ERROR: --dry-run y --ejecutar no pueden usarse juntos.", file=sys.stderr)
+        return 1
+    org = args.org or (_edicion_local().get("github") or {}).get("organizacion")
+    if not org:
+        print("ERROR: indica --org.", file=sys.stderr)
+        return 1
+    return equipos.congelar(_repos_de(args), org, args.fecha_limite, ejecutar=args.ejecutar, registro=Path(args.registro))
+
+
+def cmd_recolectar(args: argparse.Namespace) -> int:
+    from dataton import equipos, nivel, recolectar
+    escala = Path(args.escala) if args.escala else nivel.buscar_escala(Path.cwd())
+    if not escala or not escala.is_file():
+        print("ERROR: no se encontró evaluacion/escala-preparacion-0-7.yml. Indica --escala.", file=sys.stderr)
+        return 1
+    if args.carpeta:
+        entregas = sorted(p for p in Path(args.carpeta).iterdir() if p.is_dir())
+    else:
+        org = args.org or (_edicion_local().get("github") or {}).get("organizacion")
+        if not org:
+            print("ERROR: indica --org o --carpeta.", file=sys.stderr)
+            return 1
+        print(f"Clonando en {args.destino} (solo lectura)…")
+        entregas = recolectar.clonar(_repos_de(args), org, Path(args.destino), equipos.GitHub())
+    if not entregas:
+        print("No hay entregas que evaluar.")
+        return 1
+    recolectar.recolectar(entregas, escala, Path(args.informes))
+    print(f"Informes en {args.informes}. Son evidencia para el jurado, no el puntaje final.")
+    return 0
+
+
+def cmd_sumas(args: argparse.Namespace) -> int:
+    carpeta = Path(args.carpeta)
+    if not carpeta.is_dir():
+        print(f"ERROR: {carpeta} no es una carpeta.", file=sys.stderr)
+        return 1
+    archivos = sorted(p for p in carpeta.rglob("*") if p.is_file() and p.name != "checksums.sha256"
+                      and not p.name.startswith(".") and p.suffix != ".md")
+    lineas = [f"{m_validar.sha256(p)}  {p.relative_to(carpeta).as_posix()}" for p in archivos]
+    (carpeta / "checksums.sha256").write_text("".join(l + "\n" for l in lineas), encoding="utf-8", newline="\n")
+    print(f"Escrito {carpeta / 'checksums.sha256'} con {len(lineas)} archivo(s).")
+    return 0
+
+
 def construir_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="python -m dataton", description="Herramientas del datatón urbano.")
     p.add_argument("--version", action="version", version=f"dataton {__version__}")
@@ -217,6 +300,42 @@ def construir_parser() -> argparse.ArgumentParser:
     pl.add_argument("--destino", required=True, help="Carpeta local del repositorio público (clon de git).")
     pl.add_argument("--ejecutar", action="store_true", help="Prepara la rama (sin esta opción, solo simulación).")
     pl.set_defaults(func=cmd_liberar)
+
+    pc = sub.add_parser("crear-equipos", help="Crea los repositorios y equipos de GitHub de cada equipo (simulación por defecto).")
+    pc.add_argument("--csv", required=True, help="CSV con equipo_id, nombre, desafio, usuarios_github, contacto.")
+    pc.add_argument("--org", help="Organización de GitHub (por defecto, la de edicion.yml).")
+    pc.add_argument("--plantilla-equipo", help="Repositorio plantilla de equipo (por defecto, el de edicion.yml).")
+    pc.add_argument("--paquetes-internos", help="Repositorio de paquetes internos (por defecto, el de edicion.yml).")
+    pc.add_argument("--registro", help="CSV de registro (por defecto, equipos_creados.csv junto al CSV de entrada).")
+    pc.add_argument("--ejecutar", action="store_true", help="Aplica los cambios, después de una confirmación escrita.")
+    pc.add_argument("--dry-run", action="store_true", help="Simulación (es el modo por defecto).")
+    pc.set_defaults(func=cmd_crear_equipos)
+
+    pg = sub.add_parser("congelar", help="Registra el SHA de main, etiqueta entrega-final y archiva (simulación por defecto).")
+    pg.add_argument("--org", help="Organización de GitHub (por defecto, la de edicion.yml).")
+    pg.add_argument("--fecha-limite", required=True, help="Fecha y hora límite en ISO 8601 con zona horaria.")
+    g = pg.add_mutually_exclusive_group(required=True)
+    g.add_argument("--csv", help="CSV de equipos (los nombres de repositorio se calculan de él).")
+    g.add_argument("--repos", help="Lista de repositorios separados por comas.")
+    pg.add_argument("--registro", default="evaluacion/entregas.csv", help="CSV de registro de entregas.")
+    pg.add_argument("--ejecutar", action="store_true", help="Aplica los cambios, después de una confirmación escrita.")
+    pg.add_argument("--dry-run", action="store_true", help="Simulación (es el modo por defecto).")
+    pg.set_defaults(func=cmd_congelar)
+
+    pr2 = sub.add_parser("recolectar", help="Clona las entregas (solo lectura) o lee una carpeta, y consolida informes.")
+    fuente = pr2.add_mutually_exclusive_group(required=True)
+    fuente.add_argument("--org", help="Organización de GitHub de la que se clonan los repositorios de equipo.")
+    fuente.add_argument("--carpeta", help="Carpeta con entregas ya descargadas (una subcarpeta por equipo).")
+    pr2.add_argument("--csv", help="CSV de equipos (para saber qué repositorios clonar).")
+    pr2.add_argument("--repos", help="Lista de repositorios separados por comas.")
+    pr2.add_argument("--destino", default="entregas-clonadas", help="Carpeta donde se clonan los repositorios.")
+    pr2.add_argument("--informes", default="evaluacion/informes", help="Carpeta de informes.")
+    pr2.add_argument("--escala", help="Ruta de escala-preparacion-0-7.yml.")
+    pr2.set_defaults(func=cmd_recolectar)
+
+    pz = sub.add_parser("sumas", help="Escribe checksums.sha256 con la suma de cada archivo de una carpeta (sin .md).")
+    pz.add_argument("carpeta", help="Carpeta, por ejemplo entrega/salida.")
+    pz.set_defaults(func=cmd_sumas)
 
     pd = sub.add_parser("demo", help="Ejecuta todo sobre datos sintéticos y termina con OK o la lista de fallas.")
     pd.set_defaults(func=cmd_demo)

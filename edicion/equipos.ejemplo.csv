@@ -1,0 +1,4 @@
+equipo_id,nombre,desafio,usuarios_github,contacto
+01,Datos Claros,D1,usuario-ficticio-1;usuario-ficticio-2,equipo01@ejemplo.invalid
+02,Mapa Abierto,D5,usuario-ficticio-3,equipo02@ejemplo.invalid
+03,Red de Servicios,D2,usuario-ficticio-4;usuario-ficticio-5;usuario-ficticio-6,equipo03@ejemplo.invalid

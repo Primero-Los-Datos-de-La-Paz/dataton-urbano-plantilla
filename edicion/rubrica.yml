@@ -1,0 +1,97 @@
+# Rúbrica de valoración: qué respalda cada criterio y cómo se califica de 0 a 4.
+#
+# Los PESOS NO están aquí: se toman de edicion/edicion.yml (rubrica.criterios), que es el único
+# lugar donde se escriben. `python -m dataton regenerar` comprueba que los dos archivos tengan los
+# mismos criterios y que los pesos sumen 100.
+#
+# Cálculo sugerido para el jurado: puntaje del criterio = peso × (nota / 4).
+# Las herramientas automáticas reúnen evidencia; la nota la pone el jurado.
+
+criterios:
+  - id: calidad
+    pregunta: "¿El activo de datos es más confiable y consistente después del trabajo del equipo?"
+    evidencia_automatica:
+      - "scorecard: completitud, validez, unicidad y consistencia, antes y después"
+      - "nivel: criterios del nivel 3 (Depurado)"
+    revisa_jurado: "Que las mejoras sean reales y no oculten problemas; que no se hayan inventado valores ni rellenado brechas sin evidencia."
+    escala:
+      0: "No hay activo de datos o no se puede leer."
+      1: "Hay datos, pero sin mejora medible o con errores nuevos."
+      2: "Mejora parcial en alguna dimensión, con problemas importantes sin tratar."
+      3: "Mejora clara en varias dimensiones, con los problemas restantes documentados."
+      4: "Mejora clara y medida en todas las dimensiones aplicables; los problemas restantes están documentados y justificados."
+
+  - id: documentacion
+    pregunta: "¿Un tercero puede entender qué contienen los datos y de dónde vienen?"
+    evidencia_automatica:
+      - "scorecard: documentación (columnas descritas) y trazabilidad"
+      - "validar: diccionario.csv, procedencia.md y estructura de la entrega"
+    revisa_jurado: "Que las descripciones sean comprensibles y correctas, y que la procedencia permita rastrear cada archivo."
+    escala:
+      0: "Sin diccionario ni procedencia."
+      1: "Diccionario o procedencia incompletos y difíciles de entender."
+      2: "Diccionario y procedencia presentes, con vacíos importantes."
+      3: "Diccionario y procedencia completos y claros, con vacíos menores."
+      4: "Documentación completa y clara: cualquier persona puede entender y rastrear cada dato y cada cambio."
+
+  - id: reproducibilidad
+    pregunta: "¿Otra persona puede repetir el procedimiento y obtener el mismo resultado?"
+    evidencia_automatica:
+      - "reproducir: los scripts regeneran las salidas con las sumas SHA-256 declaradas"
+    revisa_jurado: "En procedimientos que no son scripts (hoja de cálculo, OpenRefine, QGIS, pasos manuales), que los pasos documentados se puedan seguir y lleven al resultado."
+    escala:
+      0: "No hay procedimiento."
+      1: "Procedimiento descrito de forma vaga; no se puede repetir."
+      2: "Procedimiento repetible con ayuda, o con diferencias en el resultado."
+      3: "Procedimiento repetible que produce el mismo resultado, con detalles menores por aclarar."
+      4: "Procedimiento repetible de principio a fin con el mismo resultado (sumas que coinciden o pasos verificados)."
+
+  - id: cobertura
+    pregunta: "¿Cuánto del desafío o de los indicadores (KPI) cubre la entrega?"
+    evidencia_automatica:
+      - "Conteo de fichas o indicadores entregados frente a los del desafío (se revisa con la ficha por desafío)"
+    revisa_jurado: "Que lo entregado responda a la pregunta del desafío y a sus entregables, según la convocatoria."
+    escala:
+      0: "No responde al desafío."
+      1: "Cubre una parte mínima del desafío."
+      2: "Cubre parte del desafío, con entregables importantes ausentes."
+      3: "Cubre la mayor parte del desafío y sus entregables."
+      4: "Cubre el desafío completo, con todos sus entregables, o justifica con evidencia lo que no se pudo cubrir."
+
+  - id: territorializacion
+    pregunta: "¿Los datos se pueden relacionar con el territorio y con otras fuentes?"
+    evidencia_automatica:
+      - "scorecard: territorialidad (verificación aproximada)"
+      - "nivel: criterio del nivel 4 (Conectable)"
+    revisa_jurado: "Que las claves territoriales y los identificadores sean correctos y que los vínculos entre tablas estén documentados."
+    escala:
+      0: "Sin referencia territorial ni identificadores comunes."
+      1: "Referencias territoriales escasas o ilegibles."
+      2: "Referencias parciales; los vínculos con otras fuentes no están probados."
+      3: "Claves territoriales o identificadores legibles en la mayoría de los registros, con vínculos documentados."
+      4: "Claves territoriales e identificadores normalizados y probados; vínculos con otras fuentes documentados y verificables."
+
+  - id: gobernanza
+    pregunta: "¿Se respetaron la privacidad, las reglas de uso y las licencias?"
+    evidencia_automatica:
+      - "verificar-privacidad: sin hallazgos graves"
+      - "validar: reglas de uso y licencias declaradas"
+    revisa_jurado: "Que no haya datos personales, que se respeten las reglas de uso de los datos internos y las licencias de las fuentes, y que se identifique a los responsables."
+    escala:
+      0: "Expone datos personales o incumple las reglas de uso."
+      1: "Riesgos de privacidad o de licencia sin tratar."
+      2: "Sin datos personales, pero con licencias o responsables sin identificar."
+      3: "Sin datos personales; licencias y responsables identificados, con vacíos menores."
+      4: "Sin datos personales; licencias, reglas de uso y responsables claros, y riesgos documentados."
+
+  - id: utilidad
+    pregunta: "¿El activo sirve para tomar decisiones y para ser reutilizado?"
+    evidencia_automatica:
+      - "nivel: criterios del nivel 5 (Reutilizable); los niveles 6 y 7 son de revisión humana"
+    revisa_jurado: "Que el activo pueda apoyar una decisión concreta o un uso posterior, y que esté en formatos abiertos y sea fácil de reutilizar."
+    escala:
+      0: "No tiene un uso identificable."
+      1: "Uso posible, pero sin explicar."
+      2: "Uso explicado, con barreras importantes para reutilizarlo."
+      3: "Uso claro y reutilizable con poco esfuerzo."
+      4: "Uso claro para una decisión concreta, listo para reutilizarse en formatos abiertos."

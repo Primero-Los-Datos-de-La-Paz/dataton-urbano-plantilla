@@ -254,9 +254,12 @@ def scorecard(paq: Path, reglas_ruta: Path | None = None) -> dict:
 
     if reglas_rec:
         rutas = list(reglas_rec)
-    else:
+    elif recursos:
         rutas = [r["path"] for r in recursos if not re.match(r"https?://", r.get("path", ""))
                  and Path(r["path"]).suffix in (".csv", ".geojson") and r["path"].startswith("data/")]
+    else:  # sin datapackage.json (por ejemplo, una entrega de equipo): tablas de salida/ y data/
+        rutas = sorted(p.relative_to(paq).as_posix() for carpeta in ("salida", "data") if (paq / carpeta).is_dir()
+                       for p in (paq / carpeta).rglob("*") if p.suffix in (".csv", ".geojson"))
 
     por_recurso, doc_num, doc_den = {}, 0, 0
     for rel in rutas:

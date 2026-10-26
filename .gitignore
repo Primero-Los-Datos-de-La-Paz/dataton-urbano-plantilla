@@ -23,3 +23,9 @@ secrets*
 
 # Carpetas de datos internos que nunca deben entrar en un repositorio público
 datos-internos/
+
+# Datos de equipos y evaluaciones: contienen usuarios y contactos. No se versionan.
+edicion/equipos.csv
+edicion/equipos_creados.csv
+entregas-clonadas/
+evaluacion/informes/

@@ -25,6 +25,10 @@ Las herramientas automáticas reúnen evidencia (completitud, validez, unicidad 
 | Archivo | Para qué |
 |---|---|
 | `escala-preparacion-0-7.yml` | Niveles de preparación |
-| `hoja-jurado.md` | Hoja de valoración del jurado (se agrega en una fase posterior) |
-| `acta-validacion.md` | Decisión del responsable del dato sobre cada mejora (se agrega en una fase posterior) |
-| `declaracion-conflictos.md` | Declaración de conflictos de interés del jurado (se agrega en una fase posterior) |
+| [`hoja-jurado.md`](hoja-jurado.md) | Hoja de valoración del jurado, con la nota de 0 a 4 por criterio |
+| [`acta-validacion.md`](acta-validacion.md) | Decisión del responsable del dato sobre cada mejora: aceptada o rechazada, con motivo |
+| [`declaracion-conflictos.md`](declaracion-conflictos.md) | Declaración de conflictos de interés del jurado |
+| `entregas.csv` | Registro de entregas congeladas (lo escribe `python -m dataton congelar`) |
+| `informes/` | Informes automáticos por equipo (los escribe `python -m dataton recolectar`; Git no los guarda) |
+
+La rúbrica, con lo que respalda cada criterio y los descriptores de 0 a 4, está en [`edicion/rubrica.yml`](../edicion/rubrica.yml). Los pesos se toman de `edicion/edicion.yml`.
